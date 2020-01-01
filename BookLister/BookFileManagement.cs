@@ -80,7 +80,11 @@ namespace BookLister
         { 
             NONE,
             Fiction,
-            Nonfiction
+            Nonfiction,
+            Fantasy,
+            Sciencefiction,
+            Romance,
+            Horror
         };
 
         // data on individual book
