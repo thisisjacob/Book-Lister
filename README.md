@@ -1,6 +1,8 @@
 # Book-Lister
 A program for managing a collection of books
 
+Built using C#, .NET Core
+
 
 
 
