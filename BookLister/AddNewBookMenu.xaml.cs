@@ -61,6 +61,7 @@ namespace BookLister
                 };
                 GenreList.Items.Add(newListBoxItemToAdd);
             }
+            GenreList.SelectedIndex = 0; // SelectedIndex set to first item (should be NONE) by default
         }
     }
 }

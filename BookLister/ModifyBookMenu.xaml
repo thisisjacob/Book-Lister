@@ -14,50 +14,48 @@
             <ColumnDefinition Width="144*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="72*"></RowDefinition>
-            <RowDefinition Height="30*"></RowDefinition>
-            <RowDefinition Height="72*"></RowDefinition>
-            <RowDefinition Height="72*"></RowDefinition>
+            <RowDefinition Height="67*"></RowDefinition>
+            <RowDefinition Height="28*"></RowDefinition>
             <RowDefinition Height="38*"></RowDefinition>
-            <RowDefinition Height="107*"></RowDefinition>
-            <RowDefinition Height="72*"></RowDefinition>
+            <RowDefinition Height="97*"></RowDefinition>
+            <RowDefinition Height="101*"></RowDefinition>
+            <RowDefinition Height="35*"></RowDefinition>
+            <RowDefinition Height="67*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20">
+        <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Height="27" Width="37">
             Title
         </TextBlock>
         <TextBox Grid.Column="2" Grid.Row="0" Name="TitleBox">
 
         </TextBox>
-        <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20">
+        <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Height="26" Width="133">
             Date Published
         </TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="1" Name="DateBox"/>
+        <TextBox Grid.Column="2" Name="DateBox" Margin="0,67,0,0" Grid.RowSpan="2"/>
         <TextBlock Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Height="27" Width="61">
             Author
         </TextBlock>
-        <TextBox Grid.Column="2" Grid.Row="2" Name="AuthorBox">
+        <TextBox Grid.Column="2" Grid.Row="1" Name="AuthorBox" Margin="0,28,0,0" Grid.RowSpan="2">
 
         </TextBox>
-        <TextBlock Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20">
+        <TextBlock Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Height="27" Width="53">
             Genre
         </TextBlock>
-        <ListBox Grid.Column="2" Grid.Row="3" Name="GenreList">
+        <ListBox Grid.Column="2" Grid.Row="2" Name="GenreList" Margin="0,38,0,41" Grid.RowSpan="3" >
 
         </ListBox>
-        <TextBlock Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20">
-            Finished Reading
-        </TextBlock>
-        <CheckBox Grid.Column="2" Grid.Row="4" Name="IsReadBox">
-
-        </CheckBox>
-        <TextBlock Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20">
+        <TextBlock Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Height="27" Width="151">
             Book Description
         </TextBlock>
-        <TextBox Grid.Column ="2" Grid.Row="5" Name="DescBox">
+        <TextBox Grid.Column ="2" Grid.Row="4" Name="DescBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible">
 
         </TextBox>
-        <Button Grid.Column="2" Grid.Row="6" FontSize="40" Click="ModifyData" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <TextBlock Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Height="27" Width="151">
+            Finished Reading
+        </TextBlock>
+        <CheckBox Grid.Column="2" Grid.Row="5" Name="IsReadBox" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Grid.Column="2" Grid.Row="6" FontSize="40" Click="ModifyData" VerticalAlignment="Center" HorizontalAlignment="Center" Height="57" Width="229">
             Modify Entry
         </Button>
     </Grid>
