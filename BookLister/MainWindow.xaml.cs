@@ -1,0 +1,236 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace BookLister
+{
+    // The main UI and interaction logic for BookLister
+    // List of books are stored in the List<BookData> currentBooks
+    // Individual BookData are stored in a text file named BookData that is modified with the BookFileManagement static class
+    // BookData are loaded into two ListBox, one named FinishedBooks and the other named UnfinishedBooks
+    // The index in currentBooks that a BookData in either list refers to can be found by converting the Tag property of the selected ListBoxItem and converting it to an int
+    public partial class MainWindow : Window
+    {
+        // holding data on books
+        List<BookData> currentBooks;
+        List<BookData.Genre> unfinishedBooksSelectedGenres = new List<BookData.Genre>(); // list of currently selected genres in each list
+        List<BookData.Genre> finishedBooksSelectedGenres = new List<BookData.Genre>();
+
+        public MainWindow()
+        {
+            foreach (BookData.Genre genres in Enum.GetValues(typeof(BookData.Genre))) 
+            {
+                unfinishedBooksSelectedGenres.Add(genres);
+                finishedBooksSelectedGenres.Add(genres);
+            }
+            InitializeComponent();
+            InitializeBookGenreGrids();
+            LoadBooks();
+        }
+
+        // Calls BookFileManagement methods to read BookData from file
+        // adds individual BookData into appropriate list of MainWindow
+        private void LoadBooks()
+        {
+            finishedBooks.Items.Clear(); // cleans up any items that may still be in the ListBox
+            unfinishedBooks.Items.Clear();
+
+            ListBoxItem tempItem;
+            currentBooks = BookFileManagement.ReadBooksFromFile();
+            for (int i = 0; i < currentBooks.Count(); i++) // creates a new ListBoxItem for each BookData, adds into correct list
+            {
+                tempItem = new ListBoxItem
+                {
+                    Content = currentBooks[i].GetTitle(),
+                    Tag = i // tag that holds index of item in BookData for later use
+                };
+                
+                if (currentBooks[i].GetIsRead() && (finishedBooksSelectedGenres.Contains(currentBooks[i].GetBookGenre())))
+                {
+                    finishedBooks.Items.Add(tempItem);
+                }
+                else if (!(currentBooks[i].GetIsRead()) && unfinishedBooksSelectedGenres.Contains(currentBooks[i].GetBookGenre()))
+                {
+                    unfinishedBooks.Items.Add(tempItem);
+                }
+            }
+        }
+
+        // when user selects a new item in either ListBox, find the BookData that belongs to that item in currentBooks
+        // then replace the string in CurrentBookSelected with the information from that BookData
+        // Deselects the value in the opposite ListBox
+        private void ListBoxSelectionChanged(object sender, EventArgs e)
+        {
+            CurrentBookSelected.Clear();
+
+            if ((sender as ListBox).Name.Equals(finishedBooks.Name))
+            {
+                unfinishedBooks.UnselectAll();
+            }
+            else if ((sender as ListBox).Name.Equals(unfinishedBooks.Name))
+            {
+                finishedBooks.UnselectAll();
+            }
+
+            ListBoxItem selectedListBoxItem = (sender as ListBox).SelectedItem as ListBoxItem;
+
+            if ((sender as ListBox).SelectedItem != null)
+            {
+                BookData dataToRetrieve = currentBooks[Convert.ToInt32(selectedListBoxItem.Tag)];
+                string textToAdd;
+                textToAdd = "Title: " + dataToRetrieve.GetTitle() + "\n";
+                textToAdd = textToAdd + "Date Published: " + dataToRetrieve.GetDatePublished() + "\n";
+                textToAdd = textToAdd + "Author: " + dataToRetrieve.GetAuthor() + "\n";
+                textToAdd = textToAdd + "Book Completed: " + dataToRetrieve.GetIsRead() + "\n";
+                textToAdd = textToAdd + "Book Genre: " + dataToRetrieve.GetBookGenre() + "\n";
+
+                CurrentBookSelected.AppendText(textToAdd);
+            }
+        }
+
+        // fired when the AddNewBook button is clicked
+        // creates a new BookData object, hands it to a new AddNewBookMenu window
+        // then adds it to the currentBooks field, calls writesBooksToFile to save the new book
+        // then calls LoadBooks to load all the books into the appropriate ListBox
+        private void AddNewBook(object sender, EventArgs e)
+        {
+            BookData tempHolder = new BookData();
+            AddNewBookMenu addingMenu = new AddNewBookMenu(tempHolder); // modifies tempHolder based on what user enters in window
+            addingMenu.ShowDialog();
+
+            if (tempHolder != null && tempHolder.IsEmpty() == false)
+            {
+                currentBooks.Add(tempHolder);
+                BookFileManagement.WriteBooksToFile(currentBooks);
+                LoadBooks();
+            }
+        }
+
+        // fired when ModifyBook button is clicked
+        // retrieves the BookData from currentBooks that is associated with the selected ListBoxItem
+        // hands the BookData object to a new ModifyBookMenu window, where it is either altered by the user
+        // or kept as is. then the data is written to file using the writeBooksToFile method, then reloaded
+        // using LoadBooks
+        private void ModifyBook(object sender, EventArgs e)
+        {
+            if (unfinishedBooks.SelectedItem != null)
+            {
+                int currentDataIndex = Convert.ToInt32((unfinishedBooks.SelectedItem as ListBoxItem).Tag);
+                ModifyBookMenu modifyMenu = new ModifyBookMenu(currentBooks[currentDataIndex]);
+                modifyMenu.ShowDialog();
+                BookFileManagement.WriteBooksToFile(currentBooks);
+                LoadBooks();
+            }
+            else if (finishedBooks.SelectedItem != null)
+            {
+                int currentDataIndex = Convert.ToInt32((finishedBooks.SelectedItem as ListBoxItem).Tag);
+                ModifyBookMenu modifyMenu = new ModifyBookMenu(currentBooks[currentDataIndex]);
+                modifyMenu.ShowDialog();
+                BookFileManagement.WriteBooksToFile(currentBooks);
+                LoadBooks();
+            }
+        }
+
+        private void DeleteEntry(object sender, EventArgs e)
+        {
+            int selectedCurrentBooksIndex;
+
+            if (unfinishedBooks.SelectedItem != null)
+            {
+                selectedCurrentBooksIndex = Convert.ToInt32((unfinishedBooks.SelectedItem as ListBoxItem).Tag);
+                currentBooks.RemoveAt(selectedCurrentBooksIndex);
+                BookFileManagement.WriteBooksToFile(currentBooks);
+                LoadBooks();
+            }
+            else if (finishedBooks.SelectedItem != null)
+            {
+                selectedCurrentBooksIndex = Convert.ToInt32((finishedBooks.SelectedItem as ListBoxItem).Tag);
+                currentBooks.RemoveAt(selectedCurrentBooksIndex);
+                BookFileManagement.WriteBooksToFile(currentBooks);
+                LoadBooks();
+            }
+        }
+
+        // adds or removes sorted genres in each ListBox
+        private void GenreSelectButton(object sender, EventArgs e)
+        {
+            string[] currentTag = (string[])(sender as Button).Tag;
+            BookData.Genre genreInformation = Enum.Parse<BookData.Genre>(currentTag[1]);
+
+            if (currentTag[0].Equals("unfinished"))
+            {
+                if (unfinishedBooksSelectedGenres.Contains(genreInformation))
+                {
+                    unfinishedBooksSelectedGenres.Remove(genreInformation); // removes from search
+                    (sender as Button).Background = Brushes.DarkRed; // for deselected
+                }
+                else
+                {
+                    unfinishedBooksSelectedGenres.Add(genreInformation); // adds back to search
+                    (sender as Button).Background = Brushes.LightBlue; // for selected
+                }
+            }
+            else if (currentTag[0].Equals("finished"))
+            {
+                if (finishedBooksSelectedGenres.Contains(genreInformation))
+                {
+                    finishedBooksSelectedGenres.Remove(genreInformation);
+                    (sender as Button).Background = Brushes.DarkRed; 
+                }
+                else
+                {
+                    finishedBooksSelectedGenres.Add(genreInformation);
+                    (sender as Button).Background = Brushes.LightBlue;
+                }
+
+            }
+
+            LoadBooks();
+        }
+
+        // Initializes the grid of buttons above each list of books that show the genre buttons
+        // for selecting and deselecting genres to look for
+        private void InitializeBookGenreGrids()
+        {
+            int i = 0; // for finding current column index
+            foreach (BookData.Genre genres in Enum.GetValues(typeof(BookData.Genre)))
+            {
+                FinishedBooksGrid.ColumnDefinitions.Add(new ColumnDefinition()); // adds a new column for each button to add in each list
+                UnfinishedBooksGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                Button buttonToAddUnfinished = new Button // defense a new button for the unfinished and finished grids
+                {
+                    Content = genres.ToString(),
+                    Tag = new string[] { "unfinished", genres.ToString() }
+                };
+                Button buttonToAddFinished = new Button
+                {
+                    Content = genres.ToString(),
+                    Tag = new string[] { "finished", genres.ToString() }
+                };
+                buttonToAddUnfinished.Background = Brushes.LightBlue; // default genre selected button is made to be LightBlue
+                buttonToAddFinished.Background = Brushes.LightBlue;
+                buttonToAddUnfinished.Click += GenreSelectButton;
+                buttonToAddFinished.Click += GenreSelectButton;
+                UnfinishedBooksGrid.Children.Add(buttonToAddUnfinished); // adds to UnfinishedBookGrid, sets its location
+                Grid.SetRow(buttonToAddUnfinished, 0);
+                Grid.SetColumn(buttonToAddUnfinished, i);
+                FinishedBooksGrid.Children.Add(buttonToAddFinished); // adds to FinishedBooksGrid, sets its location
+                Grid.SetRow(buttonToAddFinished, 0);
+                Grid.SetColumn(buttonToAddFinished, i);
+                i++;
+            }
+        }
+
+    }
+}
