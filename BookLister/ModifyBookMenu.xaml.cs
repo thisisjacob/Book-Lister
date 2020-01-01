@@ -27,6 +27,7 @@ namespace BookLister
             DateBox.Text = modifiedEntry.GetDatePublished();
             AuthorBox.Text = modifiedEntry.GetAuthor();
             IsReadBox.IsChecked = modifiedEntry.GetIsRead();
+            DescBox.Text = modifiedEntry.GetDescription();
         }
 
         private void ModifyData(object sender, EventArgs e)
@@ -34,11 +35,11 @@ namespace BookLister
             BookData tempObject;
             if (IsReadBox.IsChecked == true)
             {
-                tempObject = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, true, (BookData.Genre)GenreList.SelectedIndex); // TODO: replace placeholder genre
+                tempObject = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, true, (BookData.Genre)GenreList.SelectedIndex, DescBox.Text); 
             }
             else
             {
-                tempObject = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, false, (BookData.Genre)GenreList.SelectedIndex); // TODO: replace placeholder genre
+                tempObject = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, false, (BookData.Genre)GenreList.SelectedIndex, DescBox.Text); 
             }
             
             if (!tempObject.IsEmpty())
@@ -48,6 +49,7 @@ namespace BookLister
                 modifiedEntry.SetDatePublished(tempObject.GetDatePublished());
                 modifiedEntry.SetIsRead(tempObject.GetIsRead());
                 modifiedEntry.SetGenre(tempObject.GetBookGenre());
+                modifiedEntry.SetDescription(tempObject.GetDescription());
             }
 
             this.Close();

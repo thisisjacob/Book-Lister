@@ -51,7 +51,7 @@
         <TextBlock Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Height="27" Width="131">
             Finished Books
         </TextBlock>
-        <TextBox Grid.Column="1" Grid.Row="2" Name="CurrentBookSelected" IsReadOnly="True">
+        <TextBox Grid.Column="1" Grid.Row="2" Name="CurrentBookSelected" IsReadOnly="True" TextWrapping="Wrap">
 
         </TextBox>
         <Button Grid.Column="0" Grid.Row="3" Name="DeleteButton" Click="DeleteEntry">
