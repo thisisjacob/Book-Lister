@@ -82,7 +82,7 @@ namespace BookLister
             Fiction,
             Nonfiction,
             Fantasy,
-            Sciencefiction,
+            Scifi,
             Romance,
             Horror
         };

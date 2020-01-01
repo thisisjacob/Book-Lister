@@ -92,9 +92,9 @@ namespace BookLister
                 textToAdd = "Title: " + dataToRetrieve.GetTitle() + "\n";
                 textToAdd = textToAdd + "Date Published: " + dataToRetrieve.GetDatePublished() + "\n";
                 textToAdd = textToAdd + "Author: " + dataToRetrieve.GetAuthor() + "\n";
-                textToAdd = textToAdd + "Book Completed: " + dataToRetrieve.GetIsRead() + "\n";
-                textToAdd = textToAdd + "Book Genre: " + dataToRetrieve.GetBookGenre() + "\n";
-                textToAdd = textToAdd + "Book Description: \n" + dataToRetrieve.GetDescription() + "\n";
+                textToAdd = textToAdd + "Completed: " + dataToRetrieve.GetIsRead() + "\n";
+                textToAdd = textToAdd + "Genre: " + dataToRetrieve.GetBookGenre() + "\n";
+                textToAdd = textToAdd + "Description: \n" + dataToRetrieve.GetDescription() + "\n";
 
                 CurrentBookSelected.AppendText(textToAdd);
             }
@@ -151,16 +151,15 @@ namespace BookLister
             {
                 selectedCurrentBooksIndex = Convert.ToInt32((unfinishedBooks.SelectedItem as ListBoxItem).Tag);
                 currentBooks.RemoveAt(selectedCurrentBooksIndex);
-                BookFileManagement.WriteBooksToFile(currentBooks);
-                LoadBooks();
             }
             else if (finishedBooks.SelectedItem != null)
             {
                 selectedCurrentBooksIndex = Convert.ToInt32((finishedBooks.SelectedItem as ListBoxItem).Tag);
                 currentBooks.RemoveAt(selectedCurrentBooksIndex);
-                BookFileManagement.WriteBooksToFile(currentBooks);
-                LoadBooks();
+
             }
+            BookFileManagement.WriteBooksToFile(currentBooks);
+            LoadBooks();
         }
 
         // adds or removes sorted genres in each ListBox
@@ -212,12 +211,14 @@ namespace BookLister
                 Button buttonToAddUnfinished = new Button // defense a new button for the unfinished and finished grids
                 {
                     Content = genres.ToString(),
-                    Tag = new string[] { "unfinished", genres.ToString() }
+                    Tag = new string[] { "unfinished", genres.ToString() },
+                    FontSize = 10
                 };
                 Button buttonToAddFinished = new Button
                 {
                     Content = genres.ToString(),
-                    Tag = new string[] { "finished", genres.ToString() }
+                    Tag = new string[] { "finished", genres.ToString() },
+                    FontSize = 10
                 };
                 buttonToAddUnfinished.Background = Brushes.LightBlue; // default genre selected button is made to be LightBlue
                 buttonToAddFinished.Background = Brushes.LightBlue;
