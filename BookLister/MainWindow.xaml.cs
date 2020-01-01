@@ -94,6 +94,7 @@ namespace BookLister
                 textToAdd = textToAdd + "Author: " + dataToRetrieve.GetAuthor() + "\n";
                 textToAdd = textToAdd + "Book Completed: " + dataToRetrieve.GetIsRead() + "\n";
                 textToAdd = textToAdd + "Book Genre: " + dataToRetrieve.GetBookGenre() + "\n";
+                textToAdd = textToAdd + "Book Description: \n" + dataToRetrieve.GetDescription() + "\n";
 
                 CurrentBookSelected.AppendText(textToAdd);
             }

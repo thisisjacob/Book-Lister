@@ -30,11 +30,11 @@ namespace BookLister
             BookData tempObject;
             if (IsReadBox.IsChecked == true)
             {
-                tempObject = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, true, (BookData.Genre)GenreList.SelectedIndex);
+                tempObject = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, true, (BookData.Genre)GenreList.SelectedIndex, DescBox.Text);
             }
             else
             {
-                tempObject = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, false, (BookData.Genre)GenreList.SelectedIndex); 
+                tempObject = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, false, (BookData.Genre)GenreList.SelectedIndex, DescBox.Text); 
             }
 
             if (!tempObject.IsEmpty())
@@ -44,6 +44,7 @@ namespace BookLister
                 dataBeingModified.SetDatePublished(tempObject.GetDatePublished());
                 dataBeingModified.SetIsRead(tempObject.GetIsRead());
                 dataBeingModified.SetGenre(tempObject.GetBookGenre());
+                dataBeingModified.SetDescription(tempObject.GetDescription());
             }
 
             this.Close();
@@ -57,7 +58,6 @@ namespace BookLister
                 {
                     Content = genres.ToString(),
                     Tag = genres
-                    
                 };
                 GenreList.Items.Add(newListBoxItemToAdd);
             }
