@@ -16,6 +16,7 @@ Or
 2. Using Developer Command Prompt for Visual Studio, 
 
 	a. Run the "dotnet restore" command on BookLister.csproj
+	
 	b. Run the "msbuild" command on BookLister.csproj
 	
  
