@@ -14,8 +14,10 @@ How To Compile:
 1. Open BookLister.sln in Visual Studio, build solution
 Or
 2. Using Developer Command Prompt for Visual Studio, 
+
 	a. Run the "dotnet restore" command on BookLister.csproj
 	b. Run the "msbuild" command on BookLister.csproj
+	
  
 Notes On Modifying:
 MainWindow is where the user selects and chooses what to do with books.
