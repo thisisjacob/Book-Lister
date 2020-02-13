@@ -46,7 +46,7 @@
         <TextBlock Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20">
             Book Description
         </TextBlock>
-        <TextBox Grid.Column ="1" Grid.Row="4" Name="DescBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible"/>
+        <TextBox Grid.Column ="1" Grid.Row="4" Name="DescBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" AcceptsTab="True"/>
         <CheckBox Grid.Column="1" Grid.Row="5" Name="IsReadBox" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Finished Reading?"/>
         <Button Grid.Column="1" Grid.Row="6" FontSize="40" Click="CreateData" VerticalAlignment="Center" HorizontalAlignment="Center">
             Create Entry
