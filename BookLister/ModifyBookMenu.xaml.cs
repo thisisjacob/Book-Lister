@@ -26,7 +26,7 @@ namespace BookLister
             DateBox.Text = entryToModify.GetDatePublished();
             AuthorBox.Text = entryToModify.GetAuthor();
             IsReadBox.IsChecked = entryToModify.GetIsRead();
-            DescBox.Text = entryToModify.GetDescription(); 
+            DescBox.Text = entryToModify.GetDescriptionUnfiltered(); 
         }
 
         private void ModifyData(object sender, EventArgs e)
