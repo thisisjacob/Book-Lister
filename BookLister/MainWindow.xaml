@@ -22,8 +22,7 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
-            <MenuItem Header="_Options">
-                
+            <MenuItem Header="_Genres" Click="GenresMenu">
             </MenuItem>
         </Menu>
         

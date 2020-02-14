@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BookLister.Windows;
 
 namespace BookLister
 {
@@ -116,6 +117,12 @@ namespace BookLister
                 BookFileManagement.WriteBooksToFile(currentBooks);
                 LoadBooks();
             }
+        }
+
+        private void GenresMenu(object sender, EventArgs e)
+        {
+            GenreManagement newMenu = new GenreManagement();
+            newMenu.ShowDialog();
         }
 
         // fired when ModifyBook button is clicked

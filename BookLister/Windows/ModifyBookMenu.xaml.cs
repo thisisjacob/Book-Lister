@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace BookLister
+namespace BookLister.Windows
 {
     /// <summary>
     /// Interaction logic for ModifyBookMenu.xaml
