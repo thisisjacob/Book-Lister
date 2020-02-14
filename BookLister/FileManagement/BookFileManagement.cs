@@ -19,15 +19,21 @@ namespace BookLister
             List<string> allLinesToWrite = new List<string>();
 
 
+            // Writes each BookData in listOfBooks to storage in turn
             for (int i = 0; i < listOfBooks.Count; i++)
             {
-                bookFields = listOfBooks[i].ReturnInformation();
-                for (int j = 0; j < bookFields.Count; j++)
+                if (listOfBooks[i] != null && !listOfBooks[i].IsEmpty()) // prevents invalid BookData from being read and causing null reference exceptions
                 {
-                    allLinesToWrite.Add(bookFields[j]);
-                }
 
+                    bookFields = listOfBooks[i].ReturnInformation();
+                    for (int j = 0; j < bookFields.Count; j++)
+                    {
+                        allLinesToWrite.Add(bookFields[j]);
+                    }
+                }
             }
+
+
 
             try
             {
@@ -57,15 +63,21 @@ namespace BookLister
 
             for (int i = 0; i < (rawFileData.Length / 6); i++)
             {
-                lineInformation = new string[]{ rawFileData[0 + (i * 6)], rawFileData[1 + (i * 6)], rawFileData[2 + (i * 6)], rawFileData[3 + (i * 6)], rawFileData[4 + (i * 6)], rawFileData[5 + (i * 6)] };
-                tempHolder = new BookData(lineInformation[0], lineInformation[1], lineInformation[2], Convert.ToBoolean(lineInformation[3]), Enum.Parse<BookData.Genre>(lineInformation[4], true), lineInformation[5]);
-                if (tempHolder != null && !tempHolder.IsEmpty()) // if null or empty, do not add to readInformation
+                try
                 {
-                    readInformation.Add(tempHolder);
+                    lineInformation = new string[] { rawFileData[0 + (i * 6)], rawFileData[1 + (i * 6)], rawFileData[2 + (i * 6)], rawFileData[3 + (i * 6)], rawFileData[4 + (i * 6)], rawFileData[5 + (i * 6)] };
+                    tempHolder = new BookData(lineInformation[0], lineInformation[1], lineInformation[2], Convert.ToBoolean(lineInformation[3]), Enum.Parse<BookData.Genre>(lineInformation[4], true), lineInformation[5]);
+                    if (tempHolder != null && !tempHolder.IsEmpty()) // if null or empty, do not add to readInformation
+                    {
+                        readInformation.Add(tempHolder);
+                    }
                 }
+                catch (IndexOutOfRangeException) // if end of line reached before all data of current BookData can be read, end loop prematurely
+                {
+                    break;
+                }
+
             }
-
-
 
             return readInformation;
         }
@@ -86,6 +98,7 @@ namespace BookLister
             Romance,
             Horror
         };
+        const string NEW_LINE_REPLACEMENT = "​​"; // for filtering and unfiltering new line from text when moved into and out of storage
 
         // data on individual book
         string title;
@@ -102,7 +115,7 @@ namespace BookLister
             datePublished = givenDate;
             isRead = isCompleted;
             bookGenre = givenGenre;
-            description = givenDescription;
+            description = givenDescription.Replace(Environment.NewLine, NEW_LINE_REPLACEMENT); // Replacing new line with replacement to store
         }
 
         public BookData()
@@ -201,6 +214,12 @@ namespace BookLister
         public string GetDescription()
         {
             return description;
+        }
+
+        // For returning the description with the new line replaced with a constant string that does not create a new line
+        public string GetDescriptionUnfiltered()
+        {
+            return description.Replace(NEW_LINE_REPLACEMENT, Environment.NewLine);
         }
 
     }
