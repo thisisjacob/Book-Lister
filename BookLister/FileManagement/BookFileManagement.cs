@@ -63,16 +63,21 @@ namespace BookLister
 
             for (int i = 0; i < (rawFileData.Length / 6); i++)
             {
-                lineInformation = new string[]{ rawFileData[0 + (i * 6)], rawFileData[1 + (i * 6)], rawFileData[2 + (i * 6)], rawFileData[3 + (i * 6)], rawFileData[4 + (i * 6)], rawFileData[5 + (i * 6)] };
-                tempHolder = new BookData(lineInformation[0], lineInformation[1], lineInformation[2], Convert.ToBoolean(lineInformation[3]), Enum.Parse<BookData.Genre>(lineInformation[4], true), lineInformation[5]);
-                if (tempHolder != null && !tempHolder.IsEmpty()) // if null or empty, do not add to readInformation
+                try
                 {
-                    readInformation.Add(tempHolder);
+                    lineInformation = new string[] { rawFileData[0 + (i * 6)], rawFileData[1 + (i * 6)], rawFileData[2 + (i * 6)], rawFileData[3 + (i * 6)], rawFileData[4 + (i * 6)], rawFileData[5 + (i * 6)] };
+                    tempHolder = new BookData(lineInformation[0], lineInformation[1], lineInformation[2], Convert.ToBoolean(lineInformation[3]), Enum.Parse<BookData.Genre>(lineInformation[4], true), lineInformation[5]);
+                    if (tempHolder != null && !tempHolder.IsEmpty()) // if null or empty, do not add to readInformation
+                    {
+                        readInformation.Add(tempHolder);
+                    }
                 }
+                catch (IndexOutOfRangeException) // if end of line reached before all data of current BookData can be read, end loop prematurely
+                {
+                    break;
+                }
+
             }
-
-
-
 
             return readInformation;
         }
