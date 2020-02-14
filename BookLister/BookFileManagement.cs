@@ -18,16 +18,23 @@ namespace BookLister
             List<string> bookFields;
             List<string> allLinesToWrite = new List<string>();
 
-
-            for (int i = 0; i < listOfBooks.Count; i++)
-            {
-                bookFields = listOfBooks[i].ReturnInformation();
-                for (int j = 0; j < bookFields.Count; j++)
+            //try
+            //{
+                for (int i = 0; i < listOfBooks.Count; i++)
                 {
-                    allLinesToWrite.Add(bookFields[j]);
-                }
+                    bookFields = listOfBooks[i].ReturnInformation();
+                    for (int j = 0; j < bookFields.Count; j++)
+                    {
+                        allLinesToWrite.Add(bookFields[j]);
+                    }
 
-            }
+                }
+            //}
+            //catch (NullReferenceException) // 
+            //{
+
+            //}
+
 
             try
             {
@@ -104,7 +111,7 @@ namespace BookLister
             datePublished = givenDate;
             isRead = isCompleted;
             bookGenre = givenGenre;
-            description = givenDescription.Replace("\n", String.Empty); // Replacing new line with replacement to store
+            description = givenDescription.Replace(Environment.NewLine, NEW_LINE_REPLACEMENT); // Replacing new line with replacement to store
         }
 
         public BookData()
@@ -208,7 +215,7 @@ namespace BookLister
         // For returning the description with the new line replaced with a constant string that does not create a new line
         public string GetDescriptionUnfiltered()
         {
-            return description.Replace(NEW_LINE_REPLACEMENT, "\n");
+            return description.Replace(NEW_LINE_REPLACEMENT, Environment.NewLine);
         }
 
     }
