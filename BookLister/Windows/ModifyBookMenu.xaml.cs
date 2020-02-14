@@ -17,6 +17,7 @@ namespace BookLister
     /// </summary>
     public partial class ModifyBookMenu : Window
     {
+        readonly BookData originalEntry;
         BookData newEntry;
         public ModifyBookMenu(BookData entryToModify)
         {
@@ -26,7 +27,8 @@ namespace BookLister
             DateBox.Text = entryToModify.GetDatePublished();
             AuthorBox.Text = entryToModify.GetAuthor();
             IsReadBox.IsChecked = entryToModify.GetIsRead();
-            DescBox.Text = entryToModify.GetDescriptionUnfiltered(); 
+            DescBox.Text = entryToModify.GetDescriptionUnfiltered();
+            originalEntry = entryToModify;
         }
 
         private void ModifyData(object sender, EventArgs e)
@@ -44,7 +46,14 @@ namespace BookLister
 
         public BookData ModifiedEntry()
         {
-            return newEntry;
+            if (newEntry == null || newEntry.IsEmpty()) // if newEntry incomplete, or window is closed, then the original file is returned
+            {
+                return originalEntry;
+            }
+            else // otherwise, modified entry is returned
+            {
+                return newEntry;
+            }
         }
 
         // loads GenreList with ListBoxItems that represent the list of genres available in BookData

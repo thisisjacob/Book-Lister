@@ -18,22 +18,21 @@ namespace BookLister
             List<string> bookFields;
             List<string> allLinesToWrite = new List<string>();
 
-            //try
-            //{
-                for (int i = 0; i < listOfBooks.Count; i++)
+
+            // Writes each BookData in listOfBooks to storage in turn
+            for (int i = 0; i < listOfBooks.Count; i++)
+            {
+                if (listOfBooks[i] != null && !listOfBooks[i].IsEmpty()) // prevents invalid BookData from being read and causing null reference exceptions
                 {
+
                     bookFields = listOfBooks[i].ReturnInformation();
                     for (int j = 0; j < bookFields.Count; j++)
                     {
                         allLinesToWrite.Add(bookFields[j]);
                     }
-
                 }
-            //}
-            //catch (NullReferenceException) // 
-            //{
+            }
 
-            //}
 
 
             try
