@@ -67,6 +67,7 @@ namespace BookLister
 
 
 
+
             return readInformation;
         }
         
@@ -86,6 +87,7 @@ namespace BookLister
             Romance,
             Horror
         };
+        const string NEW_LINE_REPLACEMENT = "​​"; // for filtering and unfiltering new line from text when moved into and out of storage
 
         // data on individual book
         string title;
@@ -102,7 +104,7 @@ namespace BookLister
             datePublished = givenDate;
             isRead = isCompleted;
             bookGenre = givenGenre;
-            description = givenDescription;
+            description = givenDescription.Replace("\n", String.Empty); // Replacing new line with replacement to store
         }
 
         public BookData()
@@ -201,6 +203,12 @@ namespace BookLister
         public string GetDescription()
         {
             return description;
+        }
+
+        // For returning the description with the new line replaced with a constant string that does not create a new line
+        public string GetDescriptionUnfiltered()
+        {
+            return description.Replace(NEW_LINE_REPLACEMENT, "\n");
         }
 
     }

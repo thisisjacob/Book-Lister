@@ -17,47 +17,38 @@ namespace BookLister
     /// </summary>
     public partial class ModifyBookMenu : Window
     {
-        readonly BookData modifiedEntry;
+        BookData newEntry;
         public ModifyBookMenu(BookData entryToModify)
         {
-            modifiedEntry = entryToModify; // reference to passed BookData that is to be modified
             InitializeComponent();
-            InitializeGenreList();
-            TitleBox.Text = modifiedEntry.GetTitle(); // initializes with preexisting information
-            DateBox.Text = modifiedEntry.GetDatePublished();
-            AuthorBox.Text = modifiedEntry.GetAuthor();
-            IsReadBox.IsChecked = modifiedEntry.GetIsRead();
-            DescBox.Text = modifiedEntry.GetDescription();
+            InitializeGenreList(entryToModify);
+            TitleBox.Text = entryToModify.GetTitle(); // initializes with preexisting information
+            DateBox.Text = entryToModify.GetDatePublished();
+            AuthorBox.Text = entryToModify.GetAuthor();
+            IsReadBox.IsChecked = entryToModify.GetIsRead();
+            DescBox.Text = entryToModify.GetDescription(); 
         }
 
         private void ModifyData(object sender, EventArgs e)
         {
-            BookData tempObject;
             if (IsReadBox.IsChecked == true)
             {
-                tempObject = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, true, (BookData.Genre)GenreList.SelectedIndex, DescBox.Text); 
+                newEntry = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, true, (BookData.Genre)GenreList.SelectedIndex, DescBox.Text); 
             }
             else
             {
-                tempObject = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, false, (BookData.Genre)GenreList.SelectedIndex, DescBox.Text); 
+                newEntry = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, false, (BookData.Genre)GenreList.SelectedIndex, DescBox.Text); 
             }
-            
-            if (!tempObject.IsEmpty())
-            {
-                modifiedEntry.SetAuthor(tempObject.GetAuthor());
-                modifiedEntry.SetTitle(tempObject.GetTitle());
-                modifiedEntry.SetDatePublished(tempObject.GetDatePublished());
-                modifiedEntry.SetIsRead(tempObject.GetIsRead());
-                modifiedEntry.SetGenre(tempObject.GetBookGenre());
-                modifiedEntry.SetDescription(tempObject.GetDescription());
-            }
-
             this.Close();
+        }
 
+        public BookData ModifiedEntry()
+        {
+            return newEntry;
         }
 
         // loads GenreList with ListBoxItems that represent the list of genres available in BookData
-        private void InitializeGenreList()
+        private void InitializeGenreList(BookData entryToReadFrom)
         {
             foreach (BookData.Genre genres in Enum.GetValues(typeof(BookData.Genre)))
             {
@@ -70,7 +61,7 @@ namespace BookLister
                 GenreList.Items.Add(newListBoxItemToAdd);
             }
 
-            GenreList.SelectedItem = GenreList.Items.GetItemAt(Convert.ToInt32(modifiedEntry.GetBookGenre()));
+            GenreList.SelectedItem = GenreList.Items.GetItemAt(Convert.ToInt32(entryToReadFrom.GetBookGenre()));
         }
     }
 }

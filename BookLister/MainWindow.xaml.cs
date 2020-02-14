@@ -94,7 +94,7 @@ namespace BookLister
                 textToAdd = textToAdd + "Author: " + dataToRetrieve.GetAuthor() + "\n";
                 textToAdd = textToAdd + "Completed: " + dataToRetrieve.GetIsRead() + "\n";
                 textToAdd = textToAdd + "Genre: " + dataToRetrieve.GetBookGenre() + "\n";
-                textToAdd = textToAdd + "Description: \n" + dataToRetrieve.GetDescription() + "\n";
+                textToAdd = textToAdd + "Description: \n" + dataToRetrieve.GetDescriptionUnfiltered() + "\n";
 
                 CurrentBookSelected.AppendText(textToAdd);
             }
@@ -130,6 +130,7 @@ namespace BookLister
                 int currentDataIndex = Convert.ToInt32((unfinishedBooks.SelectedItem as ListBoxItem).Tag);
                 ModifyBookMenu modifyMenu = new ModifyBookMenu(currentBooks[currentDataIndex]);
                 modifyMenu.ShowDialog();
+                currentBooks[currentDataIndex] = modifyMenu.ModifiedEntry();
                 BookFileManagement.WriteBooksToFile(currentBooks);
                 LoadBooks();
             }
@@ -138,6 +139,7 @@ namespace BookLister
                 int currentDataIndex = Convert.ToInt32((finishedBooks.SelectedItem as ListBoxItem).Tag);
                 ModifyBookMenu modifyMenu = new ModifyBookMenu(currentBooks[currentDataIndex]);
                 modifyMenu.ShowDialog();
+                currentBooks[currentDataIndex] = modifyMenu.ModifiedEntry();
                 BookFileManagement.WriteBooksToFile(currentBooks);
                 LoadBooks();
             }
