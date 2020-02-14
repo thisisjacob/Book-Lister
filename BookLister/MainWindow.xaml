@@ -14,13 +14,20 @@
             <ColumnDefinition Width="83*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions >
+            <RowDefinition Height="30"/>
             <RowDefinition Height="58*" />
             <RowDefinition Height="47*" />
             <RowDefinition Height="430*" />
             <RowDefinition Height="49*" />
         </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            <MenuItem Header="_Options">
+                
+            </MenuItem>
+        </Menu>
         
-        <Grid Grid.Column="0" Grid.Row="1" Name="UnfinishedBooksGrid">
+        <Grid Grid.Column="0" Grid.Row="2" Name="UnfinishedBooksGrid">
             <!-- for unfinished books genre buttons -->
             <Grid.ColumnDefinitions>
             </Grid.ColumnDefinitions>
@@ -30,7 +37,7 @@
         </Grid>
 
 
-        <Grid Grid.Column="2" Grid.Row="1" Name="FinishedBooksGrid">
+        <Grid Grid.Column="2" Grid.Row="2" Name="FinishedBooksGrid">
             <!-- for finished books genre buttons -->
             <Grid.ColumnDefinitions>
             </Grid.ColumnDefinitions>
@@ -38,41 +45,41 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
         </Grid>
-        <ListBox Grid.Column="0" Grid.Row="2"
+        <ListBox Grid.Column="0" Grid.Row="3"
                  Name="unfinishedBooks" SelectionChanged="ListBoxSelectionChanged">
 
         </ListBox>
-        <ListBox Grid.Column="2" Grid.Row="2"
+        <ListBox Grid.Column="2" Grid.Row="3"
                  Name="finishedBooks" SelectionChanged="ListBoxSelectionChanged">
 
         </ListBox>
 
-        <Border Grid.Row="0" Grid.Column="0" Background="DeepSkyBlue" BorderBrush="Black" BorderThickness="1">
+        <Border Grid.Row="1" Grid.Column="0" Background="DeepSkyBlue" BorderBrush="Black" BorderThickness="1">
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20">
                 Unfinished Books
             </TextBlock>
         </Border>
-        <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Background="DeepSkyBlue" BorderBrush="Black" BorderThickness="1">
+        <Border Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Background="DeepSkyBlue" BorderBrush="Black" BorderThickness="1">
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20">
                 Book Information
             </TextBlock>
         </Border>
-        <Border Grid.Row="0" Grid.Column="2" Background="DeepSkyBlue" BorderBrush="Black" BorderThickness="1">
+        <Border Grid.Row="1" Grid.Column="3" Background="DeepSkyBlue" BorderBrush="Black" BorderThickness="1">
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20">
                 Finished Books
             </TextBlock>
         </Border>
 
-        <TextBox Grid.Column="1" Grid.Row="2" Name="CurrentBookSelected" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible">
+        <TextBox Grid.Column="1" Grid.Row="3" Name="CurrentBookSelected" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible">
 
         </TextBox>
-        <Button Grid.Column="0" Grid.Row="3" Name="DeleteButton" Click="DeleteEntry" Background="LightBlue">
+        <Button Grid.Column="0" Grid.Row="4" Name="DeleteButton" Click="DeleteEntry" Background="LightBlue">
             Delete an Entry
         </Button>
-        <Button Grid.Column="1" Grid.Row="3" Name="AddBookButton" Click="AddNewBook" Background="LightBlue">
+        <Button Grid.Column="1" Grid.Row="4" Name="AddBookButton" Click="AddNewBook" Background="LightBlue">
             Add a New Book
         </Button>
-        <Button Grid.Column="2" Grid.Row="3" Name="ModifyButton" Click="ModifyBook" Background="LightBlue">
+        <Button Grid.Column="2" Grid.Row="4" Name="ModifyButton" Click="ModifyBook" Background="LightBlue">
             Modify Book Entry
         </Button>
     </Grid>
