@@ -17,10 +17,9 @@ namespace BookLister.Windows
     /// </summary>
     public partial class AddNewBookMenu : Window
     {
-        readonly BookData dataBeingModified;
-        public AddNewBookMenu(BookData dataToCreate)
+        BookData dataBeingModified;
+        public AddNewBookMenu()
         {
-            dataBeingModified = dataToCreate;
             InitializeComponent();
             InitializeGenreList();
         }
@@ -39,15 +38,15 @@ namespace BookLister.Windows
 
             if (!tempObject.IsEmpty())
             {
-                dataBeingModified.SetAuthor(tempObject.GetAuthor());
-                dataBeingModified.SetTitle(tempObject.GetTitle());
-                dataBeingModified.SetDatePublished(tempObject.GetDatePublished());
-                dataBeingModified.SetIsRead(tempObject.GetIsRead());
-                dataBeingModified.SetGenre(tempObject.GetBookGenre());
-                dataBeingModified.SetDescription(tempObject.GetDescription());
+                dataBeingModified = new BookData(tempObject.GetTitle(), tempObject.GetAuthor(), tempObject.GetDatePublished(), tempObject.GetIsRead(), tempObject.GetBookGenre(), tempObject.GetDescriptionUnfiltered());
             }
 
             this.Close();
+        }
+
+        public BookData NewEntry()
+        {
+            return dataBeingModified;
         }
 
         private void InitializeGenreList()

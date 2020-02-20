@@ -10,7 +10,7 @@ namespace BookLister
 
     class GenreData
     {
-        List<string> GenreList = new List<string>();
+        private readonly List<string> GenreList = new List<string>();
 
         GenreData(List<string> givenGenres)
         {

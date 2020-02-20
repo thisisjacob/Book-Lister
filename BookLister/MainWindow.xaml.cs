@@ -107,9 +107,10 @@ namespace BookLister
         // then calls LoadBooks to load all the books into the appropriate ListBox
         private void AddNewBook(object sender, EventArgs e)
         {
-            BookData tempHolder = new BookData();
-            AddNewBookMenu addingMenu = new AddNewBookMenu(tempHolder); // modifies tempHolder based on what user enters in window
+            BookData tempHolder;
+            AddNewBookMenu addingMenu = new AddNewBookMenu(); // modifies tempHolder based on what user enters in window
             addingMenu.ShowDialog();
+            tempHolder = addingMenu.NewEntry();
 
             if (tempHolder != null && tempHolder.IsEmpty() == false)
             {

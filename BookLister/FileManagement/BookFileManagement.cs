@@ -76,6 +76,10 @@ namespace BookLister
                 {
                     break;
                 }
+                catch(IOException)
+                {
+                    Console.WriteLine("Error found while reading files in BookFileManage.ReadBooksFromFile() File: " + filePath);
+                }
 
             }
 
@@ -88,7 +92,9 @@ namespace BookLister
     // title, author, date published and whether it was read or not
     public class BookData
     {
-        public enum Genre // enum for genre type, public so that enum values can be entered into BookData definition
+        private const string NEW_LINE_REPLACEMENT = "​​"; // for filtering and unfiltering new line from text when moved into and out of storage
+
+        public enum Genre // enum for genre type, public so it can be used to populate genre lists
         { 
             NONE,
             Fiction,
@@ -98,15 +104,15 @@ namespace BookLister
             Romance,
             Horror
         };
-        const string NEW_LINE_REPLACEMENT = "​​"; // for filtering and unfiltering new line from text when moved into and out of storage
+        
 
         // data on individual book
-        string title;
-        string author;
-        string datePublished;
-        bool isRead;
-        Genre bookGenre;
-        string description;
+        private string title;
+        private string author;
+        private string datePublished;
+        private bool isRead;
+        private Genre bookGenre;
+        private string description;
 
         public BookData(string givenTitle, string givenAuthor, string givenDate, bool isCompleted, Genre givenGenre, string givenDescription)
         {
@@ -156,67 +162,44 @@ namespace BookLister
             }
         }
 
-        public void SetTitle(string givenTitle)
-        {
-            title = givenTitle;
-        }
 
-        public void SetAuthor(string givenAuthor)
-        {
-            author = givenAuthor;
-        }
-
-        public void SetDatePublished(string givenDatePublished)
-        {
-            datePublished = givenDatePublished;
-        }
-
-        public void SetIsRead(bool givenStatus)
-        {
-            isRead = givenStatus;
-        }
-
-        public void SetGenre(Genre givenNewGenre)
-        {
-            bookGenre = givenNewGenre;
-        }
-
-        public void SetDescription(string newDescription)
-        {
-            description = newDescription;
-        }
-
+        // Returns the title
         public string GetTitle()
         {
             return title;
         }
 
+        // Returns the author
         public string GetAuthor()
         {
             return author;
         }
 
+        // Returns a string representing the date published
         public string GetDatePublished()
         {
             return datePublished;
         }
         
+        // Returns true if the book has been read, false otherwise
         public bool GetIsRead()
         {
             return isRead;
         }
 
+        // Returns the Genre enum of the book's Genre
         public Genre GetBookGenre()
         {
             return bookGenre;
         }
 
+        // Returns the description, with new lines filtered out
         public string GetDescription()
         {
             return description;
         }
 
-        // For returning the description with the new line replaced with a constant string that does not create a new line
+        // For returning the description with the new lines included
         public string GetDescriptionUnfiltered()
         {
             return description.Replace(NEW_LINE_REPLACEMENT, Environment.NewLine);
