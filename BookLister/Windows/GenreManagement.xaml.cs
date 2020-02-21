@@ -17,6 +17,7 @@ namespace BookLister.Windows
     /// </summary>
     public partial class GenreManagement : Window
     {
+        private List<String> currentGenres = new List<String>(); // for holding user additions and removals of genres
         public GenreManagement()
         {
             InitializeComponent();
@@ -25,6 +26,7 @@ namespace BookLister.Windows
 
         // Reads the list of genres on file from Genres.txt, or loads a default listing of genres
         // Populates the GenreList ListBox with an entry for each genre, defaults the default index to the first item
+        // Populates the currentGenres List<String> with the read genres
         private void InitializeGenreListIntoListBox()
         {
             List<String> readGenres = GenreFileManagement.ReadGenresFromFile(); // get list of genres
@@ -36,6 +38,7 @@ namespace BookLister.Windows
                     Tag = genre
                 };
                 GenreList.Items.Add(newListBoxItemToAdd);
+                currentGenres.Add(genre);
             }
 
             GenreList.SelectedIndex = 0; // SelectedIndex set to first item (should be NONE) by default
@@ -43,7 +46,17 @@ namespace BookLister.Windows
 
         private void AddGenre(object sender, EventArgs e)
         {
-
+            if (!String.IsNullOrWhiteSpace(GenreInputBox.Text))
+            {
+                string currentGenre = GenreInputBox.Text;
+                currentGenres.Add(currentGenre);
+                ListBoxItem newListBoxItemToAdd = new ListBoxItem()
+                {
+                    Content = currentGenre,
+                    Tag = currentGenre
+                };
+                GenreList.Items.Add(newListBoxItemToAdd);
+            }
         }
 
         private void RemoveGenre(object sender, EventArgs e)
@@ -53,7 +66,8 @@ namespace BookLister.Windows
 
         private void SubmitChanges(object sender, EventArgs e)
         {
-
+            GenreFileManagement.WriteGenresToFile(currentGenres);
+            Close();
         }
     }
 }

@@ -21,7 +21,7 @@
 
         <Menu Grid.Row="1" HorizontalAlignment="Center">
             <Button Name="Add" Click="AddGenre"> Add Genre </Button>
-            <TextBox Name="GenreInputBox" Text="New Genre"></TextBox>
+            <TextBox Name="GenreInputBox" Width="150"></TextBox>
             <Button Name="Remove" Click="RemoveGenre"> Remove Genre </Button>
             <Button Name="Submit" Click="SubmitChanges"> Submit Changes </Button>
         </Menu>

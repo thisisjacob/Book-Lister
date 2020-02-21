@@ -37,6 +37,8 @@ namespace BookLister
 
         // Reads each line of the GenreFilepath constant file
         // Returns each line as a separate entry in a List<String> representing the genres
+        // If there is no preexisting Genres.txt file for holding genres, then a new one is created
+        // It will be populated with a default listing of genres, and a List<String> of those genres will be returned
         public static List<String> ReadGenresFromFile()
         {
             List<String> genres = new List<String>();
