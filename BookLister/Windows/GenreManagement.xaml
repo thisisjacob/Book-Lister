@@ -20,9 +20,9 @@
         </ListBox>
 
         <Menu Grid.Row="1" HorizontalAlignment="Center">
-            <Button> Add Genre </Button>
+            <Button Name="Add" Click="AddGenre"> Add Genre </Button>
             <TextBox Name="GenreInputBox" Text="New Genre"></TextBox>
-            <Button> Remove Genre </Button>
+            <Button Name="Remove" Click="RemoveGenre"> Remove Genre </Button>
         </Menu>
 
     </Grid>

@@ -8,11 +8,13 @@ namespace BookLister
     class GenreFileManagement
     {
         const string GENRE_FILE_PATH = "Genres.txt";
+        const string NO_GENRE_DEFAULT = "None";
 
         // Accepts a List<String> representing genres
         // Writes each genre onto a new line in the GenreFilepath constant
         public static void WriteGenresToFile(List<String> listOfGenres)
         {
+            // TODO: STOP WRITING NO_GENRE_DEFAULT
             try
             {
                 File.WriteAllLines(GENRE_FILE_PATH, listOfGenres);
@@ -28,6 +30,7 @@ namespace BookLister
         public static List<String> ReadGenresFromFile()
         {
             List<String> genres = new List<String>();
+            genres.Add(NO_GENRE_DEFAULT); // default, even if nothing in file
 
             if (!File.Exists(GENRE_FILE_PATH))
             {
@@ -39,7 +42,10 @@ namespace BookLister
                 string[] lines = File.ReadAllLines(GENRE_FILE_PATH);
                 foreach (String element in lines)
                 {
-                    genres.Add(element);
+                    if (!element.Equals(NO_GENRE_DEFAULT)) // prevents double reading NO_GENRE_DEFAULT if it was in file (should not happen in normal operation)
+                    {
+                        genres.Add(element);
+                    }
                 }
             }
             catch(IOException)

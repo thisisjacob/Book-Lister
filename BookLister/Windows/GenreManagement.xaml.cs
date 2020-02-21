@@ -36,5 +36,15 @@ namespace BookLister.Windows
             }
             GenreList.SelectedIndex = 0; // SelectedIndex set to first item (should be NONE) by default
         }
+
+        private void AddGenre(object sender, EventArgs e)
+        {
+
+        }
+
+        private void RemoveGenre(object sender, EventArgs e)
+        {
+
+        }
     }
 }
