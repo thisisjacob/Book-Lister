@@ -3,8 +3,6 @@ A program for managing a collection of books. Built using C#, .NET Core. WPF was
 
 The user can create books (along with its name, author, date and description.) Primarily an exercise in saving and reading collections of data, so specific date and naming formats are not enforced. 
 
-Future plans are to implement an SQLite local database for storing information, as well as performing general improvements in the interface.
-
 ![alt tag](https://i.imgur.com/i3p4mId.png)
 
 
