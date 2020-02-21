@@ -30,12 +30,6 @@ namespace BookLister
 
         public MainWindow()
         {
-            // Loads genres, setting them to be selected by default
-            foreach (String genre in GenreFileManagement.ReadGenresFromFile()) 
-            {
-                unfinishedBooksSelectedGenres.Add(genre);
-                finishedBooksSelectedGenres.Add(genre);
-            }
             InitializeComponent();
             InitializeBookGenreGrids();
             LoadBooks();
@@ -122,10 +116,23 @@ namespace BookLister
         }
 
         // Opens the menu for adding and removing genres
+        // Once the window is closed, GenreGrids are recalculated
         private void GenresMenu(object sender, EventArgs e)
         {
             GenreManagement newMenu = new GenreManagement();
             newMenu.ShowDialog();
+            CleanUpMenuItems();
+            InitializeBookGenreGrids();
+        }
+
+        // Removes all the children of the UI items with variable amounts of children
+        // Called before initializing them again with updated information
+        private void CleanUpMenuItems()
+        {
+            unfinishedBooksSelectedGenres = new List<String>();
+            finishedBooksSelectedGenres = new List<String>();
+            unfinishedBooks.Items.Clear();
+            finishedBooks.Items.Clear();
         }
 
         // fired when ModifyBook button is clicked
@@ -215,6 +222,12 @@ namespace BookLister
         // for selecting and deselecting genres to look for
         private void InitializeBookGenreGrids()
         {
+            // Loads genres, setting them to be selected by default
+            foreach (String genre in GenreFileManagement.ReadGenresFromFile())
+            {
+                unfinishedBooksSelectedGenres.Add(genre);
+                finishedBooksSelectedGenres.Add(genre);
+            }
             int i = 0; // for finding current column index
             foreach (String genres in GenreFileManagement.ReadGenresFromFile())
             {

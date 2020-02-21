@@ -59,18 +59,24 @@ namespace BookLister.Windows
         // loads GenreList with ListBoxItems that represent the list of genres available in BookData
         private void InitializeGenreList(BookData entryToReadFrom)
         {
+            int count = 0;
+            int indexOfEntryToReadFrom = 0;
             foreach (String genres in GenreFileManagement.ReadGenresFromFile())
             {
                 ListBoxItem newListBoxItemToAdd = new ListBoxItem()
                 {
                     Content = genres.ToString(),
                     Tag = genres
-
                 };
                 GenreList.Items.Add(newListBoxItemToAdd);
+                if (genres.Equals(entryToReadFrom.GetBookGenre())) // saves the index of the preselected entry
+                {
+                    indexOfEntryToReadFrom = count;
+                }
+                count++;
             }
 
-            GenreList.SelectedIndex = GenreList.Items.IndexOf(entryToReadFrom.GetBookGenre());  
+            GenreList.SelectedIndex = indexOfEntryToReadFrom;
         }
     }
 }
