@@ -35,11 +35,11 @@ namespace BookLister.Windows
         {
             if (IsReadBox.IsChecked == true)
             {
-                newEntry = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, true, (BookData.Genre)GenreList.SelectedIndex, DescBox.Text); 
+                newEntry = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, true, (string)(GenreList.SelectedItem as ListBoxItem).Tag, DescBox.Text); 
             }
             else
             {
-                newEntry = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, false, (BookData.Genre)GenreList.SelectedIndex, DescBox.Text); 
+                newEntry = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, false, (string)(GenreList.SelectedItem as ListBoxItem).Tag, DescBox.Text); 
             }
             this.Close();
         }
@@ -59,7 +59,7 @@ namespace BookLister.Windows
         // loads GenreList with ListBoxItems that represent the list of genres available in BookData
         private void InitializeGenreList(BookData entryToReadFrom)
         {
-            foreach (BookData.Genre genres in Enum.GetValues(typeof(BookData.Genre)))
+            foreach (String genres in GenreFileManagement.ReadGenresFromFile())
             {
                 ListBoxItem newListBoxItemToAdd = new ListBoxItem()
                 {
@@ -70,7 +70,7 @@ namespace BookLister.Windows
                 GenreList.Items.Add(newListBoxItemToAdd);
             }
 
-            GenreList.SelectedItem = GenreList.Items.GetItemAt(Convert.ToInt32(entryToReadFrom.GetBookGenre()));
+            GenreList.SelectedIndex = GenreList.Items.IndexOf(entryToReadFrom.GetBookGenre());  
         }
     }
 }

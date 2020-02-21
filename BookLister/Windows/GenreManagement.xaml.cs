@@ -44,6 +44,7 @@ namespace BookLister.Windows
             GenreList.SelectedIndex = 0; // SelectedIndex set to first item (should be NONE) by default
         }
 
+        // Adds the written genre to GenreList and currentGenres, if it is not null or empty
         private void AddGenre(object sender, EventArgs e)
         {
             if (!String.IsNullOrWhiteSpace(GenreInputBox.Text))
@@ -59,6 +60,7 @@ namespace BookLister.Windows
             }
         }
 
+        // Removes the selected genre in GenreList from GenreList and currentGenres
         private void RemoveGenre(object sender, EventArgs e)
         {
             try
@@ -77,6 +79,7 @@ namespace BookLister.Windows
             
         }
 
+        // Writes the current stage of currentGenres to file 
         private void SubmitChanges(object sender, EventArgs e)
         {
             GenreFileManagement.WriteGenresToFile(currentGenres);

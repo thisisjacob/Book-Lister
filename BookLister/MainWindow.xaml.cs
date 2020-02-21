@@ -25,15 +25,16 @@ namespace BookLister
     {
         // holding data on books
         List<BookData> currentBooks;
-        List<BookData.Genre> unfinishedBooksSelectedGenres = new List<BookData.Genre>(); // list of currently selected genres in each list
-        List<BookData.Genre> finishedBooksSelectedGenres = new List<BookData.Genre>();
+        List<String> unfinishedBooksSelectedGenres = new List<String>(); // list of currently selected genres in each list
+        List<String> finishedBooksSelectedGenres = new List<String>();
 
         public MainWindow()
         {
-            foreach (BookData.Genre genres in Enum.GetValues(typeof(BookData.Genre))) 
+            // Loads genres, setting them to be selected by default
+            foreach (String genre in GenreFileManagement.ReadGenresFromFile()) 
             {
-                unfinishedBooksSelectedGenres.Add(genres);
-                finishedBooksSelectedGenres.Add(genres);
+                unfinishedBooksSelectedGenres.Add(genre);
+                finishedBooksSelectedGenres.Add(genre);
             }
             InitializeComponent();
             InitializeBookGenreGrids();
@@ -120,6 +121,7 @@ namespace BookLister
             }
         }
 
+        // Opens the menu for adding and removing genres
         private void GenresMenu(object sender, EventArgs e)
         {
             GenreManagement newMenu = new GenreManagement();
@@ -176,7 +178,7 @@ namespace BookLister
         private void GenreSelectButton(object sender, EventArgs e)
         {
             string[] currentTag = (string[])(sender as Button).Tag;
-            BookData.Genre genreInformation = Enum.Parse<BookData.Genre>(currentTag[1]);
+            string genreInformation = currentTag[1];
 
             if (currentTag[0].Equals("unfinished"))
             {
@@ -214,7 +216,7 @@ namespace BookLister
         private void InitializeBookGenreGrids()
         {
             int i = 0; // for finding current column index
-            foreach (BookData.Genre genres in Enum.GetValues(typeof(BookData.Genre)))
+            foreach (String genres in GenreFileManagement.ReadGenresFromFile())
             {
                 FinishedBooksGrid.ColumnDefinitions.Add(new ColumnDefinition()); // adds a new column for each button to add in each list
                 UnfinishedBooksGrid.ColumnDefinitions.Add(new ColumnDefinition());

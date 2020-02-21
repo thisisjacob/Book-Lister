@@ -66,7 +66,7 @@ namespace BookLister
                 try
                 {
                     lineInformation = new string[] { rawFileData[0 + (i * 6)], rawFileData[1 + (i * 6)], rawFileData[2 + (i * 6)], rawFileData[3 + (i * 6)], rawFileData[4 + (i * 6)], rawFileData[5 + (i * 6)] };
-                    tempHolder = new BookData(lineInformation[0], lineInformation[1], lineInformation[2], Convert.ToBoolean(lineInformation[3]), Enum.Parse<BookData.Genre>(lineInformation[4], true), lineInformation[5]);
+                    tempHolder = new BookData(lineInformation[0], lineInformation[1], lineInformation[2], Convert.ToBoolean(lineInformation[3]), lineInformation[4], lineInformation[5]);
                     if (tempHolder != null && !tempHolder.IsEmpty()) // if null or empty, do not add to readInformation
                     {
                         readInformation.Add(tempHolder);
@@ -94,27 +94,15 @@ namespace BookLister
     {
         private const string NEW_LINE_REPLACEMENT = "​​"; // for filtering and unfiltering new line from text when moved into and out of storage
 
-        public enum Genre // enum for genre type, public so it can be used to populate genre lists
-        { 
-            NONE,
-            Fiction,
-            Nonfiction,
-            Fantasy,
-            Scifi,
-            Romance,
-            Horror
-        };
-        
-
         // data on individual book
         private string title;
         private string author;
         private string datePublished;
         private bool isRead;
-        private Genre bookGenre;
+        private string bookGenre;
         private string description;
 
-        public BookData(string givenTitle, string givenAuthor, string givenDate, bool isCompleted, Genre givenGenre, string givenDescription)
+        public BookData(string givenTitle, string givenAuthor, string givenDate, bool isCompleted, string givenGenre, string givenDescription)
         {
             title = givenTitle;
             author = givenAuthor;
@@ -130,7 +118,7 @@ namespace BookLister
             author = "N/A";
             datePublished = "N/A";
             isRead = false;
-            bookGenre = 0;
+            bookGenre = "";
             description = "N/A";
         }
 
@@ -188,7 +176,7 @@ namespace BookLister
         }
 
         // Returns the Genre enum of the book's Genre
-        public Genre GetBookGenre()
+        public string GetBookGenre()
         {
             return bookGenre;
         }

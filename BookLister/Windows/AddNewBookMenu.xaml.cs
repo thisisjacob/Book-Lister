@@ -29,11 +29,11 @@ namespace BookLister.Windows
             BookData tempObject;
             if (IsReadBox.IsChecked == true)
             {
-                tempObject = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, true, (BookData.Genre)GenreList.SelectedIndex, DescBox.Text);
+                tempObject = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, true, (string)(GenreList.SelectedItem as ListBoxItem).Tag, DescBox.Text);
             }
             else
             {
-                tempObject = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, false, (BookData.Genre)GenreList.SelectedIndex, DescBox.Text); 
+                tempObject = new BookData(TitleBox.Text, AuthorBox.Text, DateBox.Text, false, (string)(GenreList.SelectedItem as ListBoxItem).Tag, DescBox.Text); 
             }
 
             if (!tempObject.IsEmpty())
@@ -51,7 +51,7 @@ namespace BookLister.Windows
 
         private void InitializeGenreListIntoListBox()
         {
-            foreach (BookData.Genre genres in Enum.GetValues(typeof(BookData.Genre))) 
+            foreach (String genres in GenreFileManagement.ReadGenresFromFile()) 
             {
                 ListBoxItem newListBoxItemToAdd = new ListBoxItem()
                 {
