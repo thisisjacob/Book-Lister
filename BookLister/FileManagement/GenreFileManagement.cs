@@ -16,7 +16,6 @@ namespace BookLister
         public static void WriteGenresToFile(List<String> listOfGenres)
         {
             List<String> genresToWrite = new List<String>(); // valid genres, to be written to file
-            // TODO: STOP WRITING NO_GENRE_DEFAULT
             foreach (String element in listOfGenres)
             {
                 if (!((element.Equals(NO_GENRE_DEFAULT)) || (String.IsNullOrEmpty(element)))) // if not NO_GENRE_DEFAULT, and not null/empty, then the element string will be written
@@ -51,7 +50,8 @@ namespace BookLister
                 {
                     genres.Add(element);
                 }
-                return genres;
+                WriteGenresToFile(genres); // writes default genres to file
+                return genres;             // returns default genres
             }
 
             // Adds the genres from file into genres
@@ -79,33 +79,4 @@ namespace BookLister
             return genres; // Returns the genres from file
         }
     }
-
-    class GenreData
-    {
-        private readonly List<string> GenreList = new List<string>();
-
-        GenreData(List<string> givenGenres)
-        {
-            foreach (string element in givenGenres)
-            {
-                GenreList.Add(element);
-            }
-        }
-
-        public List<string> GetGenreList()
-        {
-            List<string> GenreListCopy = new List<string>();
-            foreach (string element in GenreList)
-            {
-                string copy = element;
-                GenreListCopy.Add(copy);
-            }
-            return GenreListCopy;
-        }
-    }
-
-    class GenrePublicMethods
-    {
-    }
-
 }
