@@ -9,20 +9,31 @@ namespace BookLister
     {
         const string GENRE_FILE_PATH = "Genres.txt";
         const string NO_GENRE_DEFAULT = "None";
+        readonly List<String> DefaultGenres = new List<String>() { "Fiction", "Nonfiction", "Fantasy", "Scifi", "Romance", "Horror" }; // read if no Genre.txt file exists
 
         // Accepts a List<String> representing genres
         // Writes each genre onto a new line in the GenreFilepath constant
         public static void WriteGenresToFile(List<String> listOfGenres)
         {
+            List<String> genresToWrite = new List<String>(); // valid genres, to be written to file
             // TODO: STOP WRITING NO_GENRE_DEFAULT
+            foreach (String element in listOfGenres)
+            {
+                if (!((element.Equals(NO_GENRE_DEFAULT)) || (String.IsNullOrEmpty(element)))) // if not NO_GENRE_DEFAULT, and not null/empty, then the element string will be written
+                {
+                    genresToWrite.Add(element);
+                }
+            }
+
             try
             {
-                File.WriteAllLines(GENRE_FILE_PATH, listOfGenres);
+                File.WriteAllLines(GENRE_FILE_PATH, genresToWrite);
             }
             catch (IOException)
             {
                 Console.WriteLine("Error writing genres to file in GenreFileManagement.WriteGenresToFile() Path: " + GENRE_FILE_PATH);
             }
+
         }
 
         // Reads each line of the GenreFilepath constant file
