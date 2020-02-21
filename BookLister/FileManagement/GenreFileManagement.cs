@@ -7,9 +7,9 @@ namespace BookLister
 {
     class GenreFileManagement
     {
-        const string GENRE_FILE_PATH = "Genres.txt";
-        const string NO_GENRE_DEFAULT = "None";
-        readonly List<String> DefaultGenres = new List<String>() { "Fiction", "Nonfiction", "Fantasy", "Scifi", "Romance", "Horror" }; // read if no Genre.txt file exists
+        private const string GENRE_FILE_PATH = "Genres.txt";
+        private const string NO_GENRE_DEFAULT = "None";
+        private readonly static List<String> DefaultGenres = new List<String> { "Fiction", "Nonfiction", "Fantasy", "Scifi", "Romance", "Horror" }; // read if no Genre.txt file exists
 
         // Accepts a List<String> representing genres
         // Writes each genre onto a new line in the GenreFilepath constant
@@ -41,13 +41,20 @@ namespace BookLister
         public static List<String> ReadGenresFromFile()
         {
             List<String> genres = new List<String>();
-            genres.Add(NO_GENRE_DEFAULT); // default, even if nothing in file
+            genres.Add(NO_GENRE_DEFAULT); // default first value, even if nothing in file
 
+            // If file does not exist, return a copy of DefaultGenres
             if (!File.Exists(GENRE_FILE_PATH))
             {
                 File.WriteAllText(GENRE_FILE_PATH, "");
+                foreach (String element in DefaultGenres)
+                {
+                    genres.Add(element);
+                }
+                return genres;
             }
 
+            // Adds the genres from file into genres
             try
             {
                 string[] lines = File.ReadAllLines(GENRE_FILE_PATH);
@@ -69,7 +76,7 @@ namespace BookLister
             }
 
 
-            return genres;
+            return genres; // Returns the genres from file
         }
     }
 
