@@ -61,7 +61,20 @@ namespace BookLister.Windows
 
         private void RemoveGenre(object sender, EventArgs e)
         {
-
+            try
+            {
+                currentGenres.Remove((string)(GenreList.SelectedItem as ListBoxItem).Tag);
+                GenreList.Items.Remove(GenreList.SelectedItem);
+            }
+            catch(ArgumentNullException) // catches exist so the program doesn't alter anything if null references given
+            {
+                Console.WriteLine("Null argument given in GenreManagement.RemoveGenre()");
+            }
+            catch(NullReferenceException)
+            {
+                Console.WriteLine("Null object reference given in GenreManagement.RemoveGenre()");
+            }
+            
         }
 
         private void SubmitChanges(object sender, EventArgs e)
