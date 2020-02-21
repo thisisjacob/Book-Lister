@@ -21,7 +21,7 @@ namespace BookLister.Windows
         public AddNewBookMenu()
         {
             InitializeComponent();
-            InitializeGenreList();
+            InitializeGenreListIntoListBox();
         }
 
         public void CreateData(object sender, EventArgs e)
@@ -49,7 +49,7 @@ namespace BookLister.Windows
             return dataBeingModified;
         }
 
-        private void InitializeGenreList()
+        private void InitializeGenreListIntoListBox()
         {
             foreach (BookData.Genre genres in Enum.GetValues(typeof(BookData.Genre))) 
             {

@@ -20,6 +20,21 @@ namespace BookLister.Windows
         public GenreManagement()
         {
             InitializeComponent();
+            InitializeGenreListIntoListBox();
+        }
+
+        private void InitializeGenreListIntoListBox()
+        {
+            foreach (BookData.Genre genres in Enum.GetValues(typeof(BookData.Genre)))
+            {
+                ListBoxItem newListBoxItemToAdd = new ListBoxItem()
+                {
+                    Content = genres.ToString(),
+                    Tag = genres
+                };
+                GenreList.Items.Add(newListBoxItemToAdd);
+            }
+            GenreList.SelectedIndex = 0; // SelectedIndex set to first item (should be NONE) by default
         }
     }
 }

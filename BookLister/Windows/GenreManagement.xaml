@@ -9,16 +9,21 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
-            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="391*" />
+            <RowDefinition Height="43*" />
         </Grid.RowDefinitions>
 
-        <ListBox Grid.Row="1" Grid.Column="1">
-            
+        <ListBox Grid.Row="0" Name="GenreList">
+
         </ListBox>
+
+        <Menu Grid.Row="1" HorizontalAlignment="Center">
+            <Button> Add Genre </Button>
+            <TextBox Name="GenreInputBox" Text="New Genre"></TextBox>
+            <Button> Remove Genre </Button>
+        </Menu>
 
     </Grid>
 </Window>

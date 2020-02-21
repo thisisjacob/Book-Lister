@@ -8,7 +8,7 @@ namespace BookLister
     // For reading/writing BookData Lists to/from file
     static class BookFileManagement
     {
-        static readonly string filePath = "BookData.txt"; // location of storage
+        const string filePath = "BookData.txt"; // location of storage
 
         // writes a List of BookData to filePath in a format that can be used to recreate book objects
         // Each field returned by the returnInformation() method of BookData is printed on a line, with each field separated by a space
