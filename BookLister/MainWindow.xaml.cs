@@ -126,6 +126,7 @@ namespace BookLister
         }
 
         // Removes all the children of the UI items with variable amounts of children
+        // Resets UI elements of genre sort buttons so they can hold updated information
         // Called before initializing them again with updated information
         private void CleanUpMenuItems()
         {
@@ -133,6 +134,12 @@ namespace BookLister
             finishedBooksSelectedGenres = new List<String>();
             unfinishedBooks.Items.Clear();
             finishedBooks.Items.Clear();
+            // clears the grid for holding sorting buttons, and clears their columns
+            // allows new buttons to be sized appropriately
+            UnfinishedBooksGrid.Children.RemoveRange(0, UnfinishedBooksGrid.Children.Count - 1);
+            UnfinishedBooksGrid.ColumnDefinitions.Clear();
+            FinishedBooksGrid.Children.RemoveRange(0, FinishedBooksGrid.Children.Count - 1);
+            FinishedBooksGrid.ColumnDefinitions.Clear();
         }
 
         // fired when ModifyBook button is clicked
